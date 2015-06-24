@@ -81,6 +81,8 @@ body{font-family: 'PT Sans', "helvetica neue", sans-serif}
 	transition: bottom 0.2s;
 }
 
+.well {margin-right: 20px;}
+
 .well:hover .title{
 	bottom:148px;
 	transition: bottom 0.2s;
