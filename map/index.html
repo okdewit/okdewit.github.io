@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Map Demo</title>
+    <meta charset="utf-8"/>
+
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="css/style.css" rel="stylesheet" type="text/css" id="theme"/>
+
+    <script src="scripts/jquery.js"></script>
+    <script src="scripts/bootstrap.js"></script>
+
+    
+    <script>styleDefault={opacity:'0.9',fillOpacity:'0.2',fillColor:'#4f4c6a'};styleSelected={fillOpacity:'0.6',fillColor:'#2fa997'};</script>
+
+    <script src="http://maps.google.com/maps/api/js"></script>
+    <script data-main="scripts/main" src="scripts/require.js"></script>
+
+</head>
+<body>
+    <div class="container data-ng-cloak" data-ng-cloak="" data-ng-controller='mapController'>
+        <h1>Marvia Distribution Map</h1>
+        <div class="row">
+            <div id="mapcontainer" class="col-md-8 nopadding">
+                <div id="distributionmap"></div>
+                <div data-ng-hide="loading||isRestricted" class="lbl lbltop">
+                    <div id="mapsearch" class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">Zoek:</span>
+                        <input type="text" class="form-control typeahead" placeholder="Postcode / Woonplaats" data-ng-model="searchdata" data-ng-enter data-ng-change="search()">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button"><i class="fa fa-plus"></i></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="lbl tooltip" data-ng-show="hovershow">
+                    <i class="fa fa-compass"></i> Postcode: {{currentzip}}<br />
+                    <i class="fa fa-home"></i> Aantal: {{currentdist.toLocaleString()}}
+                </div>
+                <div class="loadscreen" data-ng-show="loading">
+                    <span><i class="fa fa-spinner fa-spin"></i></span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <form class="form-horizontal" data-ng-show="selected|isNotEmpty">
+                    <div class="form-group limitheight">
+                        <label class="col-md-4 control-label">Postcodes:</label>
+                        <div class="col-md-8"><p class="form-control-static">{{(selected|list).join(', ')}}</p></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Aantal:</label>
+                        <div class="col-md-8"><p class="form-control-static">{{total|dutchformat}}</p></div>
+                        <label class="col-md-4 control-label">Prijs/stuk:</label>
+                        <div class="col-md-8"><p class="form-control-static">{{0.30|euroformat}}</p></div>
+                        <label class="col-md-4 control-label">Prijs:</label>
+                        <div class="col-md-8"><p class="form-control-static">{{(0.30*total)|euroformat}}</p></div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-4 col-md-8">
+                            <button id="resetmap" class="btn btn-danger">Reset</button>
+                            <button type="submit" class="btn btn-primary">Verzenden</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
