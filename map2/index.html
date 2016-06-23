@@ -1,0 +1,102 @@
+<html>
+<head>
+<style>
+        .popup {
+            position: absolute;
+            bottom: 50px;
+            left: 50px;
+            z-index: 1000;
+            padding: 8px;
+            background-color: white;
+            border: 1px solid #ccc;
+            font-size: '16px';
+        }
+        .overview {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 8px;
+            width: 200px;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+        .searchbar {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            margin-left: -250px;
+            z-index: 1000;
+            padding: 8px;
+            width: 500px;
+            background-color: white;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+</head>    
+<body>
+  <div class="row">
+      <div class="col-lg-8 col-lg-offset-2">
+           <div id="distributionmap" style="height: 700px;"></div>
+           <div class="searchbar input-group">
+               <input type="text" class="form-control typeahead" placeholder="Bv. Zaandam, 1501, of 1501-1510">
+               <span class="input-group-addon" id="maploader"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
+           </div>
+           <div class="overview">
+               <dl>
+                   <dt>Postcodes:</dt><dd id="zipcodes"></dd>
+                   <dt>Aantal:</dt><dd id="amount">0</dd>
+               </dl>
+               <button class="btn btn-xs btn-danger" id="reset">Reset</button>
+               <button class="btn btn-xs btn-primary" id="send">Verzenden</button>
+           </div>
+      </div>
+  </div>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.css" />
+  <script src="http://cdn.leafletjs.com/leaflet/v1.0.0-rc.1/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/0.11.1/bloodhound.min.js"></script>
+  <script src="map.js"></script>
+  <script>
+    
+
+    var map = $('#distributionmap').distributionmap({'distributor':'spotta'});
+
+    map.on('initialize', function(){
+        //map.addSelection([1501,1502,1503]);
+    })
+    .on('areaselect', function(event, properties){
+        $('#zipcodes').html(map.zipcodes.map(function(z){
+            return '<span class="label label-default">'+z+'</span>';
+        }).join(' '));
+        $('#amount').html(map.total);
+    })
+    .on('areaover', function(event, properties){
+        var tooltip = $('<div>', { id: 'tooltip-' + properties.zipcode, class: 'popup' });
+        tooltip.append($('<div>', { html: 'Postcode: ' + properties.zipcode + '<br/> Aantal: ' + properties.amount}));
+        $(this).append(tooltip);
+    })
+    .on('areaout', function(event, properties){ $("[id*=tooltip-]").remove(); })
+    .on('zoom', function(event, zoom){ $('#zoom').html(zoom); })
+
+    // Loading events
+    .on('loadstart', function(){ $('#maploader').show(); })
+    .on('loadend', function(){ $('#maploader').hide(); });
+
+    $('#reset').click(function(){
+        map.selection = [];
+        map.redraw();
+        $('#zipcodes').html(map.zipcodes.join(', '));
+        $('#amount').html(map.total);
+    });
+
+    $('#send').click(function(){
+        // $.post('/url', data: map.zipcodes, function(data, textStatus, xhr) {
+            /* Handle response */
+        // });
+    });
+
+</script>
+  
+</body>
