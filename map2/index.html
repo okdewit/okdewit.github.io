@@ -17,7 +17,7 @@
         .overview {
             position: absolute;
             bottom: 20px;
-            right: 20px;
+            right: 30px;
             z-index: 1000;
             padding: 8px;
             width: 200px;
@@ -35,25 +35,41 @@
             background-color: white;
             border: 1px solid #ccc;
         }
+        #zipcodes, #amount {
+            min-height: 20px;
+        }
+        #amount {
+            margin-bottom: 5px;
+        }
+        .lbl {
+            display: inline-block;
+            background-color: #777;
+            color: white;
+            padding: 3px 5px;
+            border-radius: 5px;
+            margin: 2px 0;
+        }
 
     </style>
-</head>    
+</head>
 <body>
   <div class="row">
-      <div class="col-lg-8 col-lg-offset-2">
+      <div class="col-lg-7 col-lg-offset-1">
            <div id="distributionmap" style="height: 700px;"></div>
            <div class="searchbar input-group">
                <input type="text" class="form-control typeahead" placeholder="Bv. Zaandam, 1501, of 1501-1510">
                <span class="input-group-addon" id="maploader"><i class="fa fa-circle-o-notch fa-spin fa-fw"></i></span>
            </div>
            <div class="overview">
-               <dl>
-                   <dt>Postcodes:</dt><dd id="zipcodes"></dd>
-                   <dt>Aantal:</dt><dd id="amount">0</dd>
-               </dl>
+               <div>Postcodes:</div><div id="zipcodes"></div>
+               <div>Aantal:</div><div id="amount">0</div>
+
                <button class="btn btn-xs btn-danger" id="reset">Reset</button>
                <button class="btn btn-xs btn-primary" id="send">Verzenden</button>
            </div>
+      </div>
+      <div class="col-lg-3 ">
+          <a class="btn btn-info">test</a>
       </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -63,7 +79,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/0.11.1/bloodhound.min.js"></script>
   <script src="map.js"></script>
   <script>
-    
+
 
     var map = $('#distributionmap').distributionmap({'distributor':'spotta'});
 
@@ -72,7 +88,7 @@
     })
     .on('areaselect', function(event, properties){
         $('#zipcodes').html(map.zipcodes.map(function(z){
-            return '<span class="label label-default">'+z+'</span>';
+            return '<span class="lbl">'+z+'</span>';
         }).join(' '));
         $('#amount').html(map.total);
     })
@@ -102,5 +118,5 @@
     });
 
 </script>
-  
+
 </body>
