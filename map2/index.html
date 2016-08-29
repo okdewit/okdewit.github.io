@@ -69,7 +69,8 @@
            </div>
       </div>
       <div class="col-lg-1" style="margin-top: 30px;">
-          <a class="btn btn-block btn-info" id="demo_select">Selecteer gebied</a>
+          <a class="btn btn-block btn-info" id="demo_select">Selecteer ...</a>
+          <a class="btn btn-block btn-info" id="demo_zoom">Zoom naar ...</a>
       </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -134,7 +135,7 @@
     });
 
     $('#demo_zoom').click(function(){
-        
+        map.zoomto([1501,1502,1503]);
     });
 
 </script>
