@@ -54,7 +54,7 @@
 </head>
 <body>
   <div class="row">
-      <div class="col-lg-7 col-lg-offset-1">
+      <div class="col-lg-6 col-lg-offset-2">
            <div id="distributionmap" style="height: 700px;"></div>
            <div class="searchbar input-group">
                <input type="text" class="form-control typeahead" placeholder="Bv. Zaandam, 1501, of 1501-1510">
@@ -68,8 +68,8 @@
                <button class="btn btn-xs btn-primary" id="send">Verzenden</button>
            </div>
       </div>
-      <div class="col-lg-3 ">
-          <a class="btn btn-info">test</a>
+      <div class="col-lg-1" style="margin-top: 30px;">
+          <a class="btn btn-block btn-info" id="demo_select">Selecteer gebied</a>
       </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -80,6 +80,9 @@
   <script src="map.js"></script>
   <script>
 
+    /**
+     * Map
+     */
 
     var map = $('#distributionmap').distributionmap({'distributor':'spotta'});
 
@@ -104,17 +107,34 @@
     .on('loadstart', function(){ $('#maploader').show(); })
     .on('loadend', function(){ $('#maploader').hide(); });
 
+    /**
+     * Buttons
+     */
+
+     $('#send').click(function(){
+         // $.post('/url', data: map.zipcodes, function(data, textStatus, xhr) {
+             /* Handle response */
+         // });
+     });
+
+     var reset = function(){
+         map.selection = [];
+         map.redraw();
+         $('#zipcodes').html(map.zipcodes.join(', '));
+         $('#amount').html(map.total);
+     }
+
     $('#reset').click(function(){
-        map.selection = [];
-        map.redraw();
-        $('#zipcodes').html(map.zipcodes.join(', '));
-        $('#amount').html(map.total);
+        reset();
     });
 
-    $('#send').click(function(){
-        // $.post('/url', data: map.zipcodes, function(data, textStatus, xhr) {
-            /* Handle response */
-        // });
+    $('#demo_select').click(function(){
+        reset();
+        map.addSelection([1501,1502,1503]);
+    });
+
+    $('#demo_zoom').click(function(){
+        
     });
 
 </script>
