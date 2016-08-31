@@ -68,9 +68,9 @@
                <button class="btn btn-xs btn-primary" id="send">Verzenden</button>
            </div>
       </div>
-      <div class="col-lg-1" style="margin-top: 30px;">
-          <a class="btn btn-block btn-info" id="demo_select">Selecteer ...</a>
-          <a class="btn btn-block btn-info" id="demo_zoom">Zoom naar ...</a>
+      <div class="col-lg-2" style="margin-top: 30px;">
+          <a class="btn btn-block btn-info" id="demo_select">Selecteer 1501, 1502, 1503</a>
+          <a class="btn btn-block btn-info" id="demo_zoom">Zoom naar 1011, 1012, 1015</a>
       </div>
   </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -92,7 +92,8 @@
             'highlight': { color: '#141e8c', weight: 3, opacity: 1, fillOpacity: 0.1, fillColor: '#ffffff' },
             'selected': { color: '#141e8c', weight: 1, opacity: 1, fillOpacity: 0.65, fillColor: '#141e8c' },
             'highlightselected': { color: '#141e8c', weight: 3, opacity: 1, fillOpacity: 0.65, fillColor: '#141e8c' }
-        }
+        },
+        // 'restrict': [1503,1504,1505]
     });
 
     map.on('initialize', function(){
@@ -110,9 +111,7 @@
         $(this).append(tooltip);
     })
     .on('areaout', function(event, properties){ $("[id*=tooltip-]").remove(); })
-    .on('zoom', function(event, zoom){ $('#zoom').html(zoom); })
-
-    // Loading events
+    .on('zoom', function(event, zoom){ console.log('zoomlevel: ',zoom); })
     .on('loadstart', function(){ $('#maploader').show(); })
     .on('loadend', function(){ $('#maploader').hide(); });
 
@@ -121,7 +120,13 @@
      */
 
      $('#send').click(function(){
-         // $.post('/url', data: map.zipcodes, function(data, textStatus, xhr) {
+        console.log({
+            'selected objects': map.selection,
+            'zipcode array': map.zipcodes,
+            'total distribution': map.total,
+        });
+
+         // $.post('url', {data: map.zipcodes}, function(data, textStatus, xhr) {
              /* Handle response */
          // });
      });
@@ -138,12 +143,11 @@
     });
 
     $('#demo_select').click(function(){
-        reset();
         map.addSelection([1501,1502,1503]);
     });
 
     $('#demo_zoom').click(function(){
-        map.zoomto([1501,1502,1503]);
+        map.zoomto([1011,1012,1015]);
     });
 
 </script>
