@@ -100,14 +100,17 @@
         //map.addSelection([1501,1502,1503]);
     })
     .on('areaselect', function(event, properties){
-        $('#zipcodes').html(map.zipcodes.map(function(z){
-            return '<span class="lbl">'+z+'</span>';
+        console.log(map.selection)
+        $('#zipcodes').html(map.selection.map(function(item){
+            return '<span class="lbl">'+item.zipcode+' ('+item.town+')</span>';
         }).join(' '));
         $('#amount').html(map.total);
     })
     .on('areaover', function(event, properties){
         var tooltip = $('<div>', { id: 'tooltip-' + properties.zipcode, class: 'popup' });
-        tooltip.append($('<div>', { html: 'Postcode: ' + properties.zipcode + '<br/> Aantal: ' + properties.amount}));
+        tooltip.append($('<div>', {
+            html: 'Postcode: ' + properties.zipcode + '<br/> Plaats: ' + properties.town + '<br/> Aantal: ' + properties.amount
+        }));
         $(this).append(tooltip);
     })
     .on('areaout', function(event, properties){ $("[id*=tooltip-]").remove(); })
