@@ -93,7 +93,11 @@
             'selected': { color: '#141e8c', weight: 1, opacity: 1, fillOpacity: 0.65, fillColor: '#141e8c' },
             'highlightselected': { color: '#141e8c', weight: 3, opacity: 1, fillOpacity: 0.65, fillColor: '#141e8c' }
         },
-        // 'restrict': [1503,1504,1505]
+        // 'restrict': [1503,1504,1505],
+        'maplayer': {
+            'url': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', 
+	    'attribution': '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }
     });
 
     map.on('initialize', function(){
